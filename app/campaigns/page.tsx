@@ -1,5 +1,74 @@
-import CampaignCard from "@/components/CampaignCard";
 import Link from "next/link";
+
+type Campaign = {
+  id: string;
+  title: string;
+  description: string;
+  raised: number;
+  goal: number;
+  image: string;
+};
+
+const campaigns: Campaign[] = [
+  {
+    id: "feed-children",
+    title: "Feed 100 Children",
+    description: "Provide nutritious meals to underprivileged children.",
+    raised: 35000,
+    goal: 50000,
+    image: "/images/child-meal.jpg",
+  },
+  {
+    id: "village-drive",
+    title: "Village Food Drive",
+    description: "Deliver food supplies to remote villages.",
+    raised: 42000,
+    goal: 80000,
+    image: "/images/village.jpg",
+  },
+  {
+    id: "emergency",
+    title: "Emergency Hunger Relief",
+    description: "Immediate food support during crises.",
+    raised: 60000,
+    goal: 100000,
+    image: "/images/emergency.jpg",
+  },
+  {
+    id: "school",
+    title: "School Meal Program",
+    description: "Daily meals for students to improve education.",
+    raised: 25000,
+    goal: 70000,
+    image: "/images/school.jpg",
+  },
+  {
+    id: "urban",
+    title: "Urban Hunger Support",
+    description: "Support homeless communities in cities.",
+    raised: 30000,
+    goal: 60000,
+    image: "/images/urban.jpg",
+  },
+  {
+    id: "festival",
+    title: "Festival Food Donation",
+    description: "Ensure no one sleeps hungry during festivals.",
+    raised: 15000,
+    goal: 40000,
+    image: "/images/festival.jpg",
+  },
+
+  // ⭐ NEW 7TH CAMPAIGN
+  {
+    id: "women-support",
+    title: "Women & Child Nutrition",
+    description: "Special nutrition support for women & infants.",
+    raised: 20000,
+    goal: 90000,
+    image: "/images/women.jpg",
+  },
+];
 
 export default function Campaigns() {
   return (
@@ -11,110 +80,117 @@ export default function Campaigns() {
 
       {/* HERO */}
       <section className="py-24 text-center px-6">
-        <h1 className="text-5xl md:text-6xl font-extrabold">
-          Our Campaigns
+        <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-green-700 to-emerald-500 bg-clip-text text-transparent">
+          One Meal. One Hope.
         </h1>
+
         <p className="mt-6 max-w-3xl mx-auto text-lg text-gray-700 leading-relaxed">
-          Every campaign is a step toward eliminating hunger. Choose a cause,
-          contribute, and be part of a movement that transforms lives.
+          Just ₹50 can feed one person. Choose a campaign and make an immediate impact.
         </p>
       </section>
 
-      {/* IMPACT STATS */}
-      <section className="max-w-5xl mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      {/* IMPACT BADGES */}
+      <section className="max-w-6xl mx-auto px-6 mb-16">
+        <div className="grid md:grid-cols-4 gap-6 text-center">
           {[
-            ["10,000+", "Meals Delivered"],
-            ["500+", "Campaigns Completed"],
-            ["75+", "Cities Covered"],
-          ].map(([num, label], i) => (
-            <div key={i} className="bg-white/70 backdrop-blur-lg p-6 rounded-xl shadow">
-              <h3 className="text-3xl font-bold text-green-700">{num}</h3>
-              <p className="text-gray-600">{label}</p>
+            ["🍽", "10,000+", "Meals Served"],
+            ["❤️", "2,500+", "Donors"],
+            ["📍", "75+", "Cities"],
+            ["🚀", "100%", "Transparency"],
+          ].map(([icon, num, label], i) => (
+            <div key={i} className="bg-white/70 p-6 rounded-xl shadow">
+              <div className="text-2xl">{icon}</div>
+              <h3 className="text-xl font-bold text-green-700">{num}</h3>
+              <p className="text-gray-600 text-sm">{label}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* CAMPAIGNS GRID */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
+      {/* CAMPAIGNS */}
+      <section className="max-w-7xl mx-auto px-6 py-10">
         <h2 className="text-4xl font-bold text-center">Active Campaigns</h2>
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-          <CampaignCard title="Feed 100 Children" />
-          <CampaignCard title="Village Food Drive" />
-          <CampaignCard title="Emergency Hunger Relief" />
-          <CampaignCard title="School Meal Program" />
-          <CampaignCard title="Urban Hunger Support" />
-          <CampaignCard title="Festival Food Donation" />
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+          {campaigns.map((c) => {
+            const progress = Math.min((c.raised / c.goal) * 100, 100);
+            const remaining = c.goal - c.raised;
+            const meals = Math.floor(c.raised / 50);
+
+            return (
+              <div
+                key={c.id}
+                className="group bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition"
+              >
+                {/* IMAGE */}
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={c.image}
+                    alt={c.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition"
+                  />
+                </div>
+
+                {/* CONTENT */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-green-700">
+                    {c.title}
+                  </h3>
+
+                  <p className="mt-2 text-gray-600 text-sm">
+                    {c.description}
+                  </p>
+
+                  {/* PROGRESS */}
+                  <div className="mt-5">
+                    <div className="w-full bg-gray-200 rounded-full h-3">
+                      <div
+                        className="bg-gradient-to-r from-green-500 to-emerald-600 h-3"
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+
+                    <div className="flex justify-between text-sm mt-2 text-gray-600">
+                      <span>₹{c.raised.toLocaleString()}</span>
+                      <span>Goal ₹{c.goal.toLocaleString()}</span>
+                    </div>
+
+                    {/* 🔥 IMPORTANT ADDITION */}
+                    <div className="mt-2 text-xs text-red-500 font-semibold">
+                      ₹{remaining.toLocaleString()} still required
+                    </div>
+
+                    <div className="mt-1 text-xs text-green-600">
+                      🍽 {meals} meals served
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <Link
+                    href={`/donate?campaign=${c.id}`}
+                    className="block mt-6 text-center w-full py-3 bg-green-600 text-white rounded-full font-semibold shadow-lg hover:scale-105 transition"
+                  >
+                    Support This Campaign ❤️
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      </section>
-
-      {/* HOW CAMPAIGNS WORK */}
-      <section className="bg-green-50 py-24 px-6 text-center">
-        <h2 className="text-4xl font-bold">How Our Campaigns Work</h2>
-
-        <div className="mt-12 grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <div>
-            <h3 className="text-xl font-bold">1. Identify Need</h3>
-            <p className="mt-2 text-gray-600">
-              We identify communities facing food shortages.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-bold">2. Launch Campaign</h3>
-            <p className="mt-2 text-gray-600">
-              Fundraising campaigns are launched for specific needs.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-bold">3. Deliver Impact</h3>
-            <p className="mt-2 text-gray-600">
-              Meals are prepared and distributed with transparency.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* STORY SECTION */}
-      <section className="py-24 px-6 max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl font-bold">Why Campaigns Matter</h2>
-
-        <p className="mt-6 text-gray-700 leading-relaxed">
-          Each campaign is designed to address a specific need. Whether it’s
-          feeding children, supporting disaster victims, or helping families
-          during difficult times, every campaign creates meaningful impact.
-        </p>
-
-        <p className="mt-4 text-gray-700 leading-relaxed">
-          By contributing to a campaign, you are directly participating in a
-          solution. You are not just donating—you are creating change.
-        </p>
-      </section>
-
-      {/* TESTIMONIAL */}
-      <section className="py-24 bg-gradient-to-r from-green-600 to-emerald-500 text-white text-center">
-        <h2 className="text-3xl font-bold">Supporter Voices</h2>
-        <p className="mt-6 max-w-2xl mx-auto italic">
-          “Supporting these campaigns gave me a sense of purpose. Knowing that my
-          contribution helped someone eat is truly priceless.”
-        </p>
       </section>
 
       {/* FINAL CTA */}
       <section className="py-24 text-center">
-        <h2 className="text-4xl font-bold">Start Making an Impact Today</h2>
+        <h2 className="text-4xl font-bold">Your Small Help = Someone’s Meal</h2>
         <p className="mt-4 text-gray-600">
-          Choose a campaign and contribute to a better future.
+          Don't wait. Hunger doesn't.
         </p>
 
         <Link
           href="/donate"
-          className="inline-block mt-8 px-10 py-4 bg-green-600 text-white rounded-full shadow-xl hover:scale-105 transition"
+          className="inline-block mt-8 px-12 py-4 bg-gradient-to-r from-green-600 to-emerald-500 text-white rounded-full shadow-xl hover:scale-110 transition"
         >
-          Donate Now
+          Donate Now 🚀
         </Link>
       </section>
 
