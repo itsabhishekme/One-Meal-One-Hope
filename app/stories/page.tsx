@@ -2,9 +2,18 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Stories of Hope | One Meal One Hope",
+  title:
+    "Stories of Hope | Real Impact Stories | Hunger to Hope Transformation | One Meal One Hope",
   description:
-    "Real stories of lives transformed through One Meal One Hope. See the impact of your support.",
+    "Read powerful real-life stories of hunger, survival, and transformation. Discover how one meal can change lives, restore dignity, and create lasting impact.",
+  keywords: [
+    "hunger stories",
+    "charity impact stories",
+    "food donation impact",
+    "real life transformation stories",
+    "feeding poor India",
+    "NGO success stories",
+  ],
 };
 
 export default function StoriesPage() {
@@ -13,126 +22,156 @@ export default function StoriesPage() {
 
       {/* 🌈 BACKGROUND */}
       <div className="fixed inset-0 -z-10 bg-gradient-to-br from-green-50 via-white to-emerald-100" />
-      <div className="fixed inset-0 -z-10 opacity-20 bg-[radial-gradient(circle_at_25%_30%,#22c55e,transparent_40%)]" />
-      <div className="fixed inset-0 -z-10 opacity-10 bg-[radial-gradient(circle_at_80%_70%,#10b981,transparent_40%)]" />
 
       {/* HERO */}
-      <section className="py-24 text-center px-6">
-        <h1 className="text-5xl md:text-6xl font-extrabold">
-          Stories of Hope
+      <section className="py-32 text-center px-6 max-w-5xl mx-auto">
+        <h1 className="text-6xl md:text-7xl font-extrabold leading-tight">
+          Stories That <span className="text-green-600">Change Lives</span>
         </h1>
-        <p className="mt-6 max-w-3xl mx-auto text-lg text-gray-700 leading-relaxed">
-          Behind every meal is a story. Behind every donation is a life changed.
-          These are the real voices of people whose lives have been touched by
-          One Meal One Hope.
+
+        <p className="mt-6 text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+          Behind every meal is a story of survival, courage, and transformation.
+          These are not just stories—they are proof that small acts can create
+          extraordinary change.
         </p>
       </section>
 
-      {/* 📖 FEATURED STORY */}
-      <section className="py-20 px-6 max-w-5xl mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-10 text-center">
-          <h2 className="text-3xl font-bold">A Meal That Changed Everything</h2>
+      {/* FEATURE STORY */}
+      <section className="py-24 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div className="h-96 rounded-3xl bg-gradient-to-br from-green-400 to-emerald-600 shadow-2xl animate-pulse" />
 
-          <p className="mt-6 text-gray-700 leading-relaxed">
-            Ramesh, a daily wage worker, struggled to provide meals for his family.
-            Some days, they had to sleep hungry. When our volunteers reached his
-            community, something changed.
-          </p>
+        <div>
+          <h2 className="text-4xl font-bold">
+            When One Meal Changed Everything
+          </h2>
 
-          <p className="mt-4 text-gray-700 leading-relaxed">
-            A single meal gave him the strength to keep going. Today, he not only
-            supports his family but also volunteers with us to help others.
-          </p>
+          <div className="mt-6 space-y-5 text-gray-700 text-lg leading-relaxed">
+            <p>
+              Ramesh was a daily wage worker, uncertain if he would earn enough
+              to feed his family. Every day was a gamble between survival and hunger.
+            </p>
 
-          <p className="mt-4 text-gray-700 leading-relaxed">
-            This is what impact looks like—not just food, but hope restored.
-          </p>
+            <p>
+              Hunger slowly drained his energy, confidence, and hope.
+              It wasn't just about food—it was about losing control over life itself.
+            </p>
+
+            <p>
+              One meal changed that. Not because it solved everything—
+              but because it gave him strength to try again.
+            </p>
+
+            <p className="font-semibold text-green-700 text-xl">
+              Today, Ramesh feeds others in his community.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* 📚 STORIES GRID */}
+      {/* STORY GRID */}
       <section className="py-24 px-6 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center">More Stories</h2>
+        <h2 className="text-4xl font-bold text-center">
+          More Stories of Transformation
+        </h2>
 
-        <div className="mt-12 grid md:grid-cols-3 gap-8">
-          {[
-            {
-              title: "From Hunger to Hope",
-              text: "A child who once struggled now smiles with confidence.",
-            },
-            {
-              title: "A Community United",
-              text: "Volunteers came together to feed an entire village.",
-            },
-            {
-              title: "Small Act, Big Change",
-              text: "One donation helped transform multiple lives.",
-            },
-            {
-              title: "Festival of Giving",
-              text: "Meals shared during festivals brought joy to many families.",
-            },
-            {
-              title: "Helping Hands",
-              text: "Young volunteers stepping up to make a difference.",
-            },
-            {
-              title: "New Beginnings",
-              text: "A fresh start for families in need.",
-            },
-          ].map((story, i) => (
+        <div className="mt-16 grid md:grid-cols-3 gap-10">
+          {stories.map((story, i) => (
             <div
               key={i}
-              className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition"
+              className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:-translate-y-2 transition duration-300"
             >
-              <h3 className="font-bold text-xl">{story.title}</h3>
+              <h3 className="text-xl font-bold">{story.title}</h3>
               <p className="mt-3 text-gray-600">{story.text}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 💬 TESTIMONIAL SECTION */}
-      <section className="py-24 bg-gradient-to-r from-green-600 to-emerald-500 text-white text-center px-6">
-        <h2 className="text-3xl font-bold">Voices from the Ground</h2>
+      {/* LONG FORM STORY (SEO BOOST) */}
+      <section className="py-28 px-6 max-w-4xl mx-auto">
+        <h2 className="text-4xl font-bold text-center">
+          The Reality of Hunger in India
+        </h2>
 
-        <div className="mt-10 max-w-3xl mx-auto space-y-6">
-          <p className="italic">
-            “This initiative didn’t just feed us—it gave us hope.”
+        <div className="mt-10 space-y-6 text-gray-700 text-lg leading-relaxed">
+          <p>
+            Hunger is not always visible—but it is everywhere. Millions struggle
+            daily without access to proper nutrition. It affects children’s education,
+            adults’ productivity, and entire communities' future.
           </p>
-          <p className="italic">
-            “I never imagined a simple meal could change my life so much.”
+
+          <p>
+            When a person is hungry, they are not just missing food—they are missing
+            opportunity, stability, and dignity.
+          </p>
+
+          <p>
+            A single meal can restore more than energy—it restores belief.
+            Belief that tomorrow can be better.
+          </p>
+
+          <p>
+            These stories are living proof that even the smallest action
+            can ripple into life-changing transformation.
           </p>
         </div>
       </section>
 
-      {/* 📖 LONG STORY SECTION (SEO + DEPTH) */}
-      <section className="py-24 px-6 max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl font-bold">Why Stories Matter</h2>
-
-        <p className="mt-6 text-gray-700 leading-relaxed">
-          Stories are more powerful than numbers. While statistics show scale,
-          stories show humanity. They remind us that behind every number is a
-          person, a family, and a life.
-        </p>
-
-        <p className="mt-4 text-gray-700 leading-relaxed">
-          When you donate, you become part of these stories. You become part of
-          someone’s journey from struggle to stability, from hunger to hope.
-        </p>
+      {/* QUOTE */}
+      <section className="py-24 bg-green-600 text-white text-center px-6">
+        <blockquote className="text-2xl italic max-w-3xl mx-auto">
+          “Hunger steals dreams. One meal gives them back.”
+        </blockquote>
       </section>
 
-      {/* 🎯 CTA */}
-      <section className="py-24 text-center">
-        <h2 className="text-4xl font-bold">Be Part of the Next Story</h2>
+      {/* IMPACT */}
+      <section className="py-24 text-center bg-white">
+        <h2 className="text-4xl font-bold">Our Impact So Far</h2>
 
-        <p className="mt-4 text-gray-600">
-          Your contribution can create a story of hope for someone in need.
+        <div className="mt-12 grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+          {impact.map((item, i) => (
+            <div key={i}>
+              <h3 className="text-5xl font-bold text-green-600">
+                {item.value}
+              </h3>
+              <p className="mt-2 text-gray-600">{item.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FAQ (SEO GOLD) */}
+      <section className="py-24 px-6 max-w-4xl mx-auto">
+        <h2 className="text-4xl font-bold text-center">
+          Frequently Asked Questions
+        </h2>
+
+        <div className="mt-10 space-y-6">
+          {faq.map((item, i) => (
+            <div
+              key={i}
+              className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition"
+            >
+              <h3 className="font-semibold text-lg">{item.q}</h3>
+              <p className="text-gray-600 mt-2">{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-28 text-center">
+        <h2 className="text-5xl font-bold">
+          Be Part of Someone’s Story
+        </h2>
+
+        <p className="mt-6 text-gray-600 text-lg">
+          Every donation creates a new beginning.
         </p>
 
         <Link
           href="/donate"
-          className="inline-block mt-8 px-10 py-4 bg-green-600 text-white rounded-full shadow-xl hover:scale-105 transition"
+          className="inline-block mt-10 px-14 py-5 bg-green-600 text-white text-lg rounded-full shadow-xl hover:scale-110 transition"
         >
           Donate Now
         </Link>
@@ -141,3 +180,42 @@ export default function StoriesPage() {
     </main>
   );
 }
+
+/* STORIES */
+const stories = [
+  {
+    title: "A Child Who Found Strength",
+    text: "Regular meals helped a child regain focus, energy, and confidence in school.",
+  },
+  {
+    title: "A Mother Who Didn't Give Up",
+    text: "Food support allowed her to provide for her children and rebuild her life.",
+  },
+  {
+    title: "A Community That Rose Together",
+    text: "Consistent meals united a struggling village and created collective strength.",
+  },
+];
+
+/* IMPACT */
+const impact = [
+  { value: "10K+", label: "Meals Served" },
+  { value: "500+", label: "Families Helped" },
+  { value: "100+", label: "Volunteers" },
+];
+
+/* FAQ */
+const faq = [
+  {
+    q: "How does my donation help?",
+    a: "Your donation directly funds meals for individuals and families in need.",
+  },
+  {
+    q: "Who receives the meals?",
+    a: "Underprivileged communities, daily wage workers, and children across India.",
+  },
+  {
+    q: "Is my contribution transparent?",
+    a: "Yes, we ensure full transparency and measurable impact tracking.",
+  },
+];
