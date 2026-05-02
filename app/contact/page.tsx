@@ -9,142 +9,169 @@ export default function Contact() {
     message: "",
   });
 
-  const handleSubmit = (e: any) => {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    alert("Message sent successfully!");
+    setStatus("loading");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setStatus("success");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
-    <main className="relative overflow-hidden text-gray-900">
+    <main className="relative min-h-screen overflow-hidden text-gray-900">
 
       {/* 🌈 BACKGROUND */}
-      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-green-50 via-white to-emerald-100" />
-      <div className="fixed inset-0 -z-10 opacity-20 bg-[radial-gradient(circle_at_80%_20%,#22c55e,transparent_40%)]" />
+      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-emerald-50 via-white to-green-100" />
+      <div className="fixed inset-0 -z-10 opacity-30 bg-[radial-gradient(circle_at_10%_10%,#22c55e,transparent_40%)]" />
+      <div className="fixed inset-0 -z-10 opacity-20 bg-[radial-gradient(circle_at_90%_90%,#16a34a,transparent_40%)]" />
+
+      {/* 🎉 SUCCESS OVERLAY */}
+      {status === "success" && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-xl">
+          <div className="bg-white rounded-3xl shadow-2xl p-12 text-center max-w-md animate-[fadeIn_0.4s_ease]">
+
+            <div className="w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-full bg-green-100">
+              <span className="text-4xl animate-bounce">✅</span>
+            </div>
+
+            <h2 className="text-3xl font-bold text-green-600">
+              Message Delivered
+            </h2>
+
+            <p className="mt-4 text-gray-600 leading-relaxed">
+              Your message has been successfully sent.  
+              We truly appreciate you reaching out and will respond shortly.
+            </p>
+
+            <button
+              onClick={() => setStatus("idle")}
+              className="mt-8 px-6 py-3 rounded-xl bg-gradient-to-r from-green-600 to-emerald-500 text-white shadow-lg hover:scale-105 transition"
+            >
+              Send Another Message
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* HERO */}
       <section className="py-24 text-center px-6">
-        <h1 className="text-5xl font-extrabold">Get in Touch</h1>
-        <p className="mt-6 max-w-2xl mx-auto text-lg text-gray-700">
-          Have questions, ideas, or want to contribute? We’d love to hear from you.
-          Every message matters and helps us grow stronger together.
+        <h1 className="text-5xl font-extrabold bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">
+          Let’s Connect
+        </h1>
+        <p className="mt-6 text-lg text-gray-700 max-w-xl mx-auto">
+          Share your thoughts, ideas, or questions — we’re here to listen and respond.
         </p>
       </section>
 
-      {/* CONTACT INFO */}
-      <section className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-center">
-        
-        <div className="p-6 bg-white/70 backdrop-blur rounded-xl shadow">
-          <h3 className="font-bold text-xl">Email</h3>
-          <p className="mt-2 text-gray-600">support@onemealonehope.org</p>
-        </div>
+      {/* FORM */}
+      <section className="pb-24 px-6">
+        <div className="max-w-3xl mx-auto bg-white/70 backdrop-blur-xl p-12 rounded-3xl shadow-2xl border border-white/40">
 
-        <div className="p-6 bg-white/70 backdrop-blur rounded-xl shadow">
-          <h3 className="font-bold text-xl">Phone</h3>
-          <p className="mt-2 text-gray-600">+91 799-118-5414</p>
-        </div>
+          <h2 className="text-3xl font-bold text-center mb-10">
+            Send a Message
+          </h2>
 
-        <div className="p-6 bg-white/70 backdrop-blur rounded-xl shadow">
-          <h3 className="font-bold text-xl">Location</h3>
-          <p className="mt-2 text-gray-600">India</p>
-        </div>
+          {/* ERROR */}
+          {status === "error" && (
+            <div className="mb-6 p-4 rounded-xl bg-red-100 border border-red-300 text-red-600 text-center animate-[shake_0.3s]">
+              ❌ Something went wrong. Please try again.
+            </div>
+          )}
 
-      </section>
+          <form onSubmit={handleSubmit} className="space-y-8">
 
-      {/* CONTACT FORM */}
-      <section className="py-24 px-6">
-        <div className="max-w-3xl mx-auto bg-white p-10 rounded-2xl shadow-xl">
-          <h2 className="text-3xl font-bold text-center">Send a Message</h2>
+            {/* NAME */}
+            <div className="relative">
+              <input
+                type="text"
+                required
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className="peer w-full border-b-2 border-gray-300 py-3 placeholder-transparent focus:border-green-500 outline-none"
+                placeholder="Name"
+              />
+              <label className="absolute left-0 top-3 text-gray-500 text-sm transition-all 
+                peer-placeholder-shown:top-3 peer-placeholder-shown:text-base 
+                peer-focus:-top-3 peer-focus:text-sm peer-focus:text-green-600">
+                Your Name
+              </label>
+            </div>
 
-          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-            <input
-              type="text"
-              placeholder="Your Name"
-              required
-              className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-            />
+            {/* EMAIL */}
+            <div className="relative">
+              <input
+                type="email"
+                required
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className="peer w-full border-b-2 border-gray-300 py-3 placeholder-transparent focus:border-green-500 outline-none"
+                placeholder="Email"
+              />
+              <label className="absolute left-0 top-3 text-gray-500 text-sm transition-all 
+                peer-placeholder-shown:top-3 peer-placeholder-shown:text-base 
+                peer-focus:-top-3 peer-focus:text-sm peer-focus:text-green-600">
+                Your Email
+              </label>
+            </div>
 
-            <input
-              type="email"
-              placeholder="Your Email"
-              required
-              className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-            />
+            {/* MESSAGE */}
+            <div className="relative">
+              <textarea
+                required
+                rows={5}
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                className="peer w-full border-b-2 border-gray-300 py-3 placeholder-transparent focus:border-green-500 outline-none"
+                placeholder="Message"
+              />
+              <label className="absolute left-0 top-3 text-gray-500 text-sm transition-all 
+                peer-placeholder-shown:top-3 peer-placeholder-shown:text-base 
+                peer-focus:-top-3 peer-focus:text-sm peer-focus:text-green-600">
+                Your Message
+              </label>
+            </div>
 
-            <textarea
-              placeholder="Your Message"
-              required
-              rows={5}
-              className="w-full border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              value={form.message}
-              onChange={(e) => setForm({ ...form, message: e.target.value })}
-            />
-
+            {/* BUTTON */}
             <button
               type="submit"
-              className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"
+              disabled={status === "loading"}
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-green-600 to-emerald-500 text-white shadow-lg hover:scale-[1.02] transition flex justify-center items-center"
             >
-              Send Message
+              {status === "loading" ? (
+                <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5"></span>
+              ) : (
+                "Send Message 🚀"
+              )}
             </button>
+
           </form>
         </div>
       </section>
 
-      {/* STORY / SUPPORT TEXT */}
-      <section className="py-24 px-6 max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl font-bold">We’re Here to Help</h2>
-
-        <p className="mt-6 text-gray-700 leading-relaxed">
-          Whether you’re looking to donate, volunteer, partner with us, or simply
-          learn more about our mission, we’re always open to connecting with you.
-          Every message we receive is an opportunity to build stronger
-          relationships and expand our impact.
-        </p>
-
-        <p className="mt-4 text-gray-700 leading-relaxed">
-          Our team works tirelessly to respond to every query, ensuring that your
-          voice is heard and valued.
-        </p>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-24 px-6 max-w-4xl mx-auto">
-        <h2 className="text-4xl font-bold text-center">Frequently Asked Questions</h2>
-
-        <div className="mt-10 space-y-6">
-          <div>
-            <h3 className="font-bold">How can I donate?</h3>
-            <p className="text-gray-600">
-              Visit our donation page and choose a campaign.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold">Can I volunteer?</h3>
-            <p className="text-gray-600">
-              Yes, we welcome volunteers. Contact us to get started.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold">Do you provide updates?</h3>
-            <p className="text-gray-600">
-              Yes, we regularly share updates about campaigns and impact.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="py-24 text-center bg-gradient-to-r from-green-600 to-emerald-500 text-white">
-        <h2 className="text-4xl font-bold">Let’s Create Change Together</h2>
-        <p className="mt-4">
-          Reach out today and be part of something meaningful.
-        </p>
-      </section>
+      {/* FOOTER */}
+      <div className="text-center pb-10 text-gray-500 text-sm">
+        Built with care • Your message matters
+      </div>
 
     </main>
   );
