@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 /* -------------------------------------------------------------------------- */
-/*                         SAFE ENV VALIDATION (FIXED)                        */
+/*                         SAFE ENV VALIDATION (IMPROVED)                     */
 /* -------------------------------------------------------------------------- */
 
 const getEnv = () => {
@@ -29,16 +29,12 @@ const getTransporter = () => {
   if (!env) return null;
 
   transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    service: "gmail", // ✅ FIX: more reliable than manual SMTP
     auth: {
       user: env.user,
       pass: env.pass,
     },
-    tls: {
-      rejectUnauthorized: false,
-    },
+    // ❌ removed bad TLS config (can break Gmail auth)
   });
 
   return transporter;
@@ -107,13 +103,16 @@ export const sendEmail = async ({
 }) => {
   const t = getTransporter();
 
-  // ❌ If no env → skip sending but don’t crash
+  // ❌ If no env → skip safely
   if (!t) {
     console.warn("⚠️ Email skipped (missing env)");
     return { success: false, skipped: true };
   }
 
   try {
+    // 🧪 VERIFY BEFORE SENDING (important debug step)
+    await t.verify();
+
     const info = await t.sendMail({
       from: `"One Meal One Hope" <${process.env.EMAIL_USER}>`,
       to,
@@ -121,16 +120,18 @@ export const sendEmail = async ({
       html,
     });
 
+    console.log("✅ Email sent:", info.messageId);
+
     return {
       success: true,
       id: info.messageId,
     };
   } catch (error: any) {
-    console.error("❌ Email failed:", error);
+    console.error("❌ Email failed FULL ERROR:", error);
 
     return {
       success: false,
-      error: error.message,
+      error: error?.message || "Unknown email error",
     };
   }
 };

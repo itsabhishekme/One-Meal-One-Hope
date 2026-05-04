@@ -32,67 +32,30 @@ const emailWrapper = (content: string, dark = false) => `
   </div>
 `;
 
-// 🎨 Admin Template
+// 🎨 Templates
 const adminTemplate = (email: string) =>
   emailWrapper(
     `
     <h2 style="color:#22c55e;">🚀 New Subscriber Joined</h2>
-    <p style="color:#cbd5f5;margin-top:10px;">
-      A new user has joined your platform.
-    </p>
-
-    <div style="
-      margin-top:20px;
-      padding:20px;
-      background:#020617;
-      border-radius:10px;
-      border:1px solid rgba(34,197,94,0.2);
-    ">
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
-      <p><strong>Source:</strong> Website</p>
-    </div>
+    <p>A new user has joined your platform.</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
   `,
     true
   );
 
-// 🎨 User Template
 const userTemplate = (email: string) =>
   emailWrapper(`
     <h2 style="color:#16a34a;">Welcome 🎉</h2>
-
-    <p style="color:#374151;margin-top:12px;">
-      You're now part of something meaningful.
-    </p>
-
-    <p style="color:#6b7280;margin-top:16px;">
-      Expect powerful stories and impact updates.
-    </p>
-
-    <div style="margin-top:28px;">
-      <a href="#" style="
-        background:linear-gradient(90deg,#16a34a,#22c55e);
-        color:white;
-        padding:12px 26px;
-        border-radius:10px;
-        text-decoration:none;
-        font-weight:600;
-        display:inline-block;
-      ">
-        Explore Now →
-      </a>
-    </div>
-
-    <p style="margin-top:20px;font-size:12px;">
-      Subscribed as: ${email}
-    </p>
+    <p>You're now part of something meaningful.</p>
+    <p>Subscribed as: ${email}</p>
   `);
 
 // 🔍 Email validation
 const validateEmail = (email: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-// 🚀 Create transporter ONLY when needed (fixes build issue)
+// 🚀 Transporter (FIXED)
 const createTransporter = () => {
   const EMAIL_USER = process.env.EMAIL_USER;
   const EMAIL_PASS = process.env.EMAIL_PASS;
@@ -102,9 +65,7 @@ const createTransporter = () => {
   }
 
   return nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    service: "gmail", // ✅ IMPORTANT FIX
     auth: {
       user: EMAIL_USER,
       pass: EMAIL_PASS,
@@ -121,15 +82,12 @@ export async function POST(req: Request) {
     // ❌ Validation
     if (!email || !validateEmail(email)) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "❌ Invalid email",
-        },
+        { success: false, message: "❌ Invalid email" },
         { status: 400 }
       );
     }
 
-    // 🚫 Duplicate check
+    // 🚫 Duplicate
     if (subscribers.has(email)) {
       return NextResponse.json({
         success: false,
@@ -137,47 +95,76 @@ export async function POST(req: Request) {
       });
     }
 
-    // ✅ Save subscriber
+    // ✅ Save first (never lose data)
     subscribers.set(email, {
       email,
       createdAt: Date.now(),
       source: "website",
     });
 
-    // ⚡ Create transporter at runtime (SAFE)
-    const transporter = createTransporter();
-    const EMAIL_USER = process.env.EMAIL_USER!;
+    let emailStatus = "success";
 
-    // 📩 Send emails
-    await Promise.allSettled([
-      transporter.sendMail({
-        from: `"Subscriber Alert" <${EMAIL_USER}>`,
-        to: EMAIL_USER,
-        subject: "🎉 New Subscriber",
-        html: adminTemplate(email),
-      }),
+    try {
+      const transporter = createTransporter();
+      const EMAIL_USER = process.env.EMAIL_USER!;
 
-      transporter.sendMail({
-        from: `"Welcome" <${EMAIL_USER}>`,
-        to: email,
-        subject: "Welcome 🎉",
-        html: userTemplate(email),
-      }),
-    ]);
+      // 🧪 Verify connection (debugging)
+      await transporter.verify();
+
+      const results = await Promise.allSettled([
+        transporter.sendMail({
+          from: `"Subscriber Alert" <${EMAIL_USER}>`,
+          to: EMAIL_USER,
+          subject: "🎉 New Subscriber",
+          html: adminTemplate(email),
+        }),
+        transporter.sendMail({
+          from: `"Welcome" <${EMAIL_USER}>`,
+          to: email,
+          subject: "Welcome 🎉",
+          html: userTemplate(email),
+        }),
+      ]);
+
+      // 🔥 Detailed error logging
+      results.forEach((res, i) => {
+        if (res.status === "rejected") {
+          emailStatus = "failed";
+          console.error(
+            i === 0 ? "❌ Admin email failed:" : "❌ User email failed:",
+            res.reason
+          );
+        } else {
+          console.log(
+            i === 0 ? "✅ Admin email sent" : "✅ User email sent"
+          );
+        }
+      });
+
+    } catch (mailError) {
+      emailStatus = "failed";
+      console.error("❌ Mail system error:", mailError);
+    }
+
+    // 🎯 Smart response
+    if (emailStatus === "failed") {
+      return NextResponse.json({
+        success: true,
+        warning: true,
+        message: "Subscribed, but email failed ⚠️",
+      });
+    }
 
     return NextResponse.json({
       success: true,
-      message: "🎉 Subscribed successfully!",
+      message: "🎉 Subscribed & email sent!",
     });
 
   } catch (error: any) {
-    console.error("❌ ERROR:", error);
+    console.error("❌ API ERROR:", error);
 
     return NextResponse.json(
-      {
-        success: false,
-        message: "Server error",
-      },
+      { success: false, message: "Server error" },
       { status: 500 }
     );
   }
