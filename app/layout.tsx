@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     siteName: "One Meal One Hope",
     images: [
       {
-        url: "/og-image.jpg", // add inside /public
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "One Meal One Hope NGO",
@@ -84,6 +85,9 @@ export default function RootLayout({
 
         {/* Footer */}
         <Footer />
+
+        {/* Vercel Analytics */}
+        <Analytics />
 
       </body>
     </html>
