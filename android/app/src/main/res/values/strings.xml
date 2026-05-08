@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">one-meal-one-hope</string>
+    <string name="title_activity_main">one-meal-one-hope</string>
+    <string name="package_name">com.onemealonehope.app</string>
+    <string name="custom_url_scheme">com.onemealonehope.app</string>
+</resources>
