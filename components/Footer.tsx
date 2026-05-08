@@ -2,12 +2,25 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+
 import {
   FaInstagram,
   FaTwitter,
   FaFacebook,
   FaLinkedin,
+  FaYoutube,
+  FaGooglePlay,
+  FaApple,
+  FaHeart,
+  FaHandsHelping,
+  FaShieldAlt,
   FaCheckCircle,
+  FaArrowRight,
+  FaGlobe,
+  FaLeaf,
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 
 export default function Footer() {
@@ -17,7 +30,6 @@ export default function Footer() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  // Auto hide success
   useEffect(() => {
     if (success) {
       const timer = setTimeout(() => setSuccess(false), 4000);
@@ -31,10 +43,11 @@ export default function Footer() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     setError("");
 
     if (!validateEmail(email)) {
-      setError("Please enter a valid email address");
+      setError("Please enter valid email");
       return;
     }
 
@@ -44,7 +57,9 @@ export default function Footer() {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         body: JSON.stringify({ email }),
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
 
       const data = await res.json();
@@ -56,209 +71,461 @@ export default function Footer() {
         setError(data.message || "Something went wrong");
       }
     } catch {
-      setError("Network error. Please try again.");
+      setError("Network error");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <footer className="relative bg-black text-white pt-24 pb-12 px-6 overflow-hidden">
+    <footer className="relative overflow-hidden bg-[#050505] text-white">
 
-      {/* 🌌 Background Glow */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-900/10 via-transparent to-green-700/10 blur-3xl pointer-events-none" />
+      {/* BACKGROUND */}
+      <div className="absolute inset-0 pointer-events-none">
 
-      <div className="relative max-w-7xl mx-auto">
+        <div className="absolute top-0 left-0 w-[700px] h-[700px] bg-green-500/10 blur-[180px] rounded-full" />
 
-        {/* TOP SECTION */}
-        <div className="grid md:grid-cols-4 gap-12 border-b border-gray-800 pb-16">
+        <div className="absolute bottom-0 right-0 w-[700px] h-[700px] bg-emerald-500/10 blur-[180px] rounded-full" />
 
-          {/* BRAND */}
-          <div>
-            <h2 className="text-3xl font-extrabold text-green-500 tracking-wide">
-              One Meal One Hope
-            </h2>
-            <p className="mt-5 text-gray-400 text-sm leading-relaxed">
-              A mission-driven NGO dedicated to ending hunger by providing meals
-              to those in need. Every donation restores dignity and builds hope.
-            </p>
-          </div>
+        <div className="absolute top-1/2 left-1/2 w-[500px] h-[500px] bg-lime-400/5 blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2" />
 
-          {/* LINKS */}
-          <div>
-            <h3 className="text-lg font-semibold mb-5 text-white">
-              Quick Links
-            </h3>
-            <ul className="space-y-3 text-gray-400 text-sm">
-              {[
-                { name: "Home", href: "/" },
-                { name: "About Us", href: "/about" },
-                { name: "Campaigns", href: "/campaigns" },
-                { name: "Donate", href: "/donate" },
-                { name: "Contact", href: "/contact" },
-              ].map((link, i) => (
-                <li key={i}>
-                  <Link
-                    href={link.href}
-                    className="hover:text-green-500 transition hover:translate-x-1 inline-block"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+      </div>
 
-          {/* SUPPORT */}
-          <div>
-            <h3 className="text-lg font-semibold mb-5 text-white">
-              Support
-            </h3>
-            <ul className="space-y-3 text-gray-400 text-sm">
-              {["FAQs", "Privacy Policy", "Terms & Conditions", "Refund Policy"].map(
-                (item, i) => (
-                  <li key={i}>
-                    <Link
-                      href="#"
-                      className="hover:text-green-500 transition hover:translate-x-1 inline-block"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
+      <div className="relative z-10">
 
-          {/* 💎 NEWSLETTER PREMIUM */}
-          <div>
-            <h3 className="text-lg font-semibold mb-3 text-white">
-              Stay Connected
-            </h3>
-            <p className="text-gray-400 text-sm mb-4">
-              Get updates on campaigns & impact stories.
-            </p>
+        {/* HERO CTA */}
+        <section className="max-w-7xl mx-auto px-6 pt-24">
 
-            <form
-              onSubmit={handleSubmit}
-              className="relative flex flex-col gap-4 p-5 rounded-2xl border border-gray-800 bg-white/5 backdrop-blur-xl shadow-[0_0_40px_rgba(0,255,150,0.05)]"
-            >
+          <div className="relative overflow-hidden rounded-[40px] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-3xl p-10 md:p-16">
 
-              {/* Floating Input */}
-              <div className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onFocus={() => setFocused(true)}
-                  onBlur={() => setFocused(false)}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="w-full px-4 pt-6 pb-2 rounded-lg bg-black/50 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500 transition"
-                />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,255,150,0.15),transparent_40%)]" />
 
-                <label
-                  className={`absolute left-4 transition-all text-gray-400 text-sm
-                    ${
-                      focused || email
-                        ? "top-1 text-xs text-green-400"
-                        : "top-3"
-                    }`}
-                >
-                  Enter your email
-                </label>
+            <div className="relative z-10 max-w-4xl">
+
+              <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm font-semibold mb-8">
+                <FaHeart />
+                Together We Can Change Lives
               </div>
 
-              {/* Button */}
-              <button
-                type="submit"
-                disabled={loading}
-                className={`relative overflow-hidden py-3 rounded-lg font-semibold transition-all duration-300
-                ${
-                  loading
-                    ? "bg-gray-700 cursor-not-allowed"
-                    : "bg-gradient-to-r from-green-500 to-green-600 hover:scale-[1.02] shadow-lg hover:shadow-green-500/30"
-                }`}
-              >
-                {loading ? "Subscribing..." : "Subscribe"}
+              <h1 className="text-5xl md:text-7xl font-black leading-tight">
 
-                {/* Shine */}
-                {!loading && (
-                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] hover:translate-x-[100%] transition duration-700" />
-                )}
-              </button>
+                Feed Hope.
+                <span className="block bg-gradient-to-r from-green-400 via-emerald-300 to-lime-300 bg-clip-text text-transparent">
+                  Nourish Humanity.
+                </span>
 
-              {/* Success */}
-              {success && (
-                <div className="flex items-center gap-2 text-green-400 text-sm animate-fade-in">
-                  <FaCheckCircle />
-                  Successfully subscribed!
-                </div>
-              )}
+              </h1>
 
-              {/* Error */}
-              {error && (
-                <p className="text-red-400 text-sm animate-fade-in">
-                  ⚠️ {error}
-                </p>
-              )}
-            </form>
-          </div>
-        </div>
+              <p className="mt-8 text-lg text-gray-300 max-w-2xl leading-relaxed">
+                One Meal One Hope is dedicated to ending hunger and restoring dignity.
+                Every donation creates real impact for families in need.
+              </p>
 
-        {/* IMPACT */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center py-14 border-b border-gray-800">
-          {[
-            { value: "10,000+", label: "Meals Served" },
-            { value: "800+", label: "Volunteers" },
-            { value: "75+", label: "Cities" },
-            { value: "100%", label: "Transparency" },
-          ].map((item, i) => (
-            <div key={i} className="hover:scale-105 transition">
-              <h3 className="text-3xl font-bold text-green-500">
-                {item.value}
-              </h3>
-              <p className="text-gray-400 text-sm">{item.label}</p>
+              <div className="flex flex-wrap gap-5 mt-10">
+
+                <Link
+                  href="/donate"
+                  className="group inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 px-10 py-5 rounded-2xl text-lg font-bold hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-green-500/30"
+                >
+                  Donate Now
+                  <FaArrowRight className="group-hover:translate-x-1 transition" />
+                </Link>
+
+                <Link
+                  href="/volunteer"
+                  className="inline-flex items-center gap-3 border border-white/10 bg-white/[0.03] px-10 py-5 rounded-2xl text-lg font-semibold hover:bg-white/[0.06] transition-all duration-300"
+                >
+                  Become Volunteer
+                </Link>
+
+              </div>
+
             </div>
-          ))}
-        </div>
 
-        {/* CTA */}
-        <div className="text-center py-16">
-          <h2 className="text-4xl font-bold">
-            Be the Reason Someone Eats Today
-          </h2>
-          <p className="mt-4 text-gray-400">
-            Your small contribution can create real change.
-          </p>
+          </div>
 
-          <Link
-            href="/donate"
-            className="inline-block mt-8 bg-gradient-to-r from-green-500 to-green-600 px-12 py-3 rounded-full font-semibold transition hover:scale-105 shadow-lg hover:shadow-green-500/40"
-          >
-            Donate Now
-          </Link>
-        </div>
+        </section>
 
-        {/* SOCIAL */}
-        <div className="flex justify-center gap-6 mb-10">
-          {[FaInstagram, FaTwitter, FaFacebook, FaLinkedin].map(
-            (Icon, i) => (
-              <Link
+        {/* FEATURES */}
+        <section className="max-w-7xl mx-auto px-6 py-24">
+
+          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+
+            {[
+              {
+                icon: FaHandsHelping,
+                title: "Community Support",
+                desc: "Helping underprivileged families with food and care.",
+              },
+              {
+                icon: FaShieldAlt,
+                title: "Full Transparency",
+                desc: "Track every donation and see where your support goes.",
+              },
+              {
+                icon: FaLeaf,
+                title: "Healthy Meals",
+                desc: "Providing nutritious meals prepared with care.",
+              },
+              {
+                icon: FaGlobe,
+                title: "Nationwide Reach",
+                desc: "Serving communities across multiple cities and villages.",
+              },
+            ].map((item, i) => (
+              <div
                 key={i}
-                href="#"
-                className="text-gray-400 text-xl p-3 rounded-full border border-gray-700 hover:border-green-500 hover:text-green-500 transition transform hover:scale-110 hover:shadow-green-500/30"
+                className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.03] p-8 hover:-translate-y-3 transition-all duration-500"
               >
-                <Icon />
-              </Link>
-            )
-          )}
-        </div>
 
-        {/* FOOTER */}
-        <div className="text-center text-gray-500 text-sm border-t border-gray-800 pt-6">
-          © {new Date().getFullYear()} One Meal One Hope NGO. All rights reserved.
-        </div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-green-500/10 to-transparent" />
+
+                <div className="relative z-10">
+
+                  <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center shadow-2xl shadow-green-500/20">
+
+                    <item.icon className="text-3xl text-white" />
+
+                  </div>
+
+                  <h3 className="mt-8 text-2xl font-bold">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-4 text-gray-400 leading-relaxed">
+                    {item.desc}
+                  </p>
+
+                </div>
+
+              </div>
+            ))}
+
+          </div>
+
+        </section>
+
+        {/* APP DOWNLOAD */}
+        <section className="border-y border-white/10 bg-white/[0.02]">
+
+          <div className="max-w-7xl mx-auto px-6 py-24">
+
+            <div className="text-center">
+
+              <div className="inline-block px-5 py-2 rounded-full border border-green-500/20 bg-green-500/10 text-green-400 text-sm font-semibold mb-6">
+                MOBILE APP AVAILABLE
+              </div>
+
+              <h2 className="text-5xl md:text-6xl font-black">
+                Download Our NGO App
+              </h2>
+
+              <p className="mt-6 text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                Donate instantly, explore campaigns, volunteer nearby,
+                and track the impact you create directly from your phone.
+              </p>
+
+              <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-14">
+
+                {/* GOOGLE PLAY */}
+                <Link
+                  href="https://play.google.com/store"
+                  target="_blank"
+                  className="group w-full md:w-auto flex items-center gap-5 bg-white text-black px-10 py-5 rounded-3xl hover:scale-105 transition-all duration-300 shadow-2xl"
+                >
+
+                  <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center">
+                    <FaGooglePlay className="text-4xl text-green-600" />
+                  </div>
+
+                  <div className="text-left">
+                    <p className="text-sm text-gray-600">
+                      GET IT ON
+                    </p>
+
+                    <h4 className="text-2xl font-black">
+                      Google Play
+                    </h4>
+                  </div>
+
+                </Link>
+
+                {/* APPLE */}
+                <Link
+                  href="https://www.apple.com/app-store/"
+                  target="_blank"
+                  className="group w-full md:w-auto flex items-center gap-5 bg-zinc-900 border border-white/10 px-10 py-5 rounded-3xl hover:scale-105 transition-all duration-300 shadow-2xl"
+                >
+
+                  <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center">
+                    <FaApple className="text-4xl text-white" />
+                  </div>
+
+                  <div className="text-left">
+                    <p className="text-sm text-gray-400">
+                      DOWNLOAD ON THE
+                    </p>
+
+                    <h4 className="text-2xl font-black">
+                      App Store
+                    </h4>
+                  </div>
+
+                </Link>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* STATS */}
+        <section className="max-w-7xl mx-auto px-6 py-24">
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+
+            {[
+              { value: "10K+", label: "Meals Served" },
+              { value: "850+", label: "Volunteers" },
+              { value: "75+", label: "Cities Reached" },
+              { value: "100%", label: "Transparency" },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="text-center rounded-[30px] border border-white/10 bg-white/[0.03] p-10 hover:-translate-y-2 transition-all duration-300"
+              >
+
+                <h3 className="text-5xl font-black bg-gradient-to-r from-green-400 to-emerald-300 bg-clip-text text-transparent">
+                  {item.value}
+                </h3>
+
+                <p className="mt-4 text-gray-400 text-lg">
+                  {item.label}
+                </p>
+
+              </div>
+            ))}
+
+          </div>
+
+        </section>
+
+        {/* MAIN FOOTER */}
+        <section className="border-t border-white/10">
+
+          <div className="max-w-7xl mx-auto px-6 py-20">
+
+            <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-14">
+
+              {/* BRAND */}
+              <div>
+
+                <div className="flex items-center gap-4">
+
+
+                  <div>
+                    <h2 className="text-3xl font-black bg-gradient-to-r from-green-400 to-emerald-300 bg-clip-text text-transparent">
+                      One Meal One Hope
+                    </h2>
+
+                    <p className="text-xs tracking-[4px] uppercase text-gray-500 mt-1">
+                      NGO FOUNDATION
+                    </p>
+                  </div>
+
+                </div>
+
+                <p className="mt-8 text-gray-400 leading-relaxed">
+                  Together we can build a world where no one sleeps hungry.
+                  Every contribution matters and every meal changes a life.
+                </p>
+
+                <div className="flex gap-4 mt-8">
+
+                  {[
+                    FaInstagram,
+                    FaTwitter,
+                    FaFacebook,
+                    FaLinkedin,
+                    FaYoutube,
+                  ].map((Icon, i) => (
+                    <Link
+                      key={i}
+                      href="#"
+                      className="w-14 h-14 rounded-2xl border border-white/10 bg-white/[0.03] flex items-center justify-center hover:bg-green-500 hover:border-green-500 transition-all duration-300 hover:-translate-y-2"
+                    >
+                      <Icon className="text-xl" />
+                    </Link>
+                  ))}
+
+                </div>
+
+              </div>
+
+              {/* LINKS */}
+              <div>
+
+                <h3 className="text-2xl font-bold mb-8">
+                  Quick Links
+                </h3>
+
+                <ul className="space-y-5">
+
+                  {[
+                    "Home",
+                    "About",
+                    "Campaigns",
+                    "Donate",
+                    "Volunteers",
+                    "Contact",
+                  ].map((item, i) => (
+                    <li key={i}>
+                      <Link
+                        href="#"
+                        className="text-gray-400 hover:text-green-400 transition flex items-center gap-3 group"
+                      >
+                        <span className="w-0 group-hover:w-4 h-[2px] bg-green-500 transition-all duration-300" />
+                        {item}
+                      </Link>
+                    </li>
+                  ))}
+
+                </ul>
+
+              </div>
+
+              {/* CONTACT */}
+              <div>
+
+                <h3 className="text-2xl font-bold mb-8">
+                  Contact Info
+                </h3>
+
+                <div className="space-y-6">
+
+                  <div className="flex items-start gap-4">
+                    <FaMapMarkerAlt className="text-green-400 mt-1" />
+                    <p className="text-gray-400">
+                      Bengaluru, Karnataka, India
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <FaEnvelope className="text-green-400" />
+                    <p className="text-gray-400">
+                      support@onemealonehope.org
+                    </p>
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* NEWSLETTER */}
+              <div>
+
+                <h3 className="text-2xl font-bold mb-4">
+                  Stay Updated
+                </h3>
+
+                <p className="text-gray-400 mb-8 leading-relaxed">
+                  Subscribe for updates, impact stories, and latest campaigns.
+                </p>
+
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-5"
+                >
+
+                  <div className="relative">
+
+                    <input
+                      type="email"
+                      value={email}
+                      onFocus={() => setFocused(true)}
+                      onBlur={() => setFocused(false)}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full px-6 pt-7 pb-4 rounded-2xl bg-white/[0.04] border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+
+                    <label
+                      className={`absolute left-6 transition-all duration-300 text-gray-500
+                      ${focused || email
+                          ? "top-2 text-xs text-green-400"
+                          : "top-5 text-sm"
+                        }`}
+                    >
+                      Enter your email
+                    </label>
+
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className={`w-full py-5 rounded-2xl font-bold transition-all duration-300
+                    ${loading
+                        ? "bg-gray-700"
+                        : "bg-gradient-to-r from-green-500 to-emerald-600 hover:scale-[1.02] hover:shadow-2xl hover:shadow-green-500/30"
+                      }`}
+                  >
+                    {loading ? "Please wait..." : "Subscribe Now"}
+                  </button>
+
+                  {success && (
+                    <div className="flex items-center gap-2 text-green-400 text-sm">
+                      <FaCheckCircle />
+                      Successfully subscribed!
+                    </div>
+                  )}
+
+                  {error && (
+                    <p className="text-red-400 text-sm">
+                      ⚠️ {error}
+                    </p>
+                  )}
+
+                </form>
+
+              </div>
+
+            </div>
+
+            {/* BOTTOM */}
+            <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-5 text-sm text-gray-500">
+
+              <p>
+                © {new Date().getFullYear()} One Meal One Hope NGO.
+                All rights reserved.
+              </p>
+
+              <div className="flex items-center gap-6">
+
+                <Link href="#" className="hover:text-green-400 transition">
+                  Privacy Policy
+                </Link>
+
+                <Link href="#" className="hover:text-green-400 transition">
+                  Terms & Conditions
+                </Link>
+
+                <Link href="#" className="hover:text-green-400 transition">
+                  Support
+                </Link>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
       </div>
+
     </footer>
   );
 }
