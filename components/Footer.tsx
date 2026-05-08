@@ -132,7 +132,7 @@ export default function Footer() {
                 </Link>
 
                 <Link
-                  href="/volunteer"
+                  href="/become-volunteer"
                   className="inline-flex items-center gap-3 border border-white/10 bg-white/[0.03] px-10 py-5 rounded-2xl text-lg font-semibold hover:bg-white/[0.06] transition-all duration-300"
                 >
                   Become Volunteer
