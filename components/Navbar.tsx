@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X, Play } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // ✨ Scroll effect (premium feel)
+  // ✨ Scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -92,38 +92,12 @@ export default function Navbar() {
 
         {/* 🚀 CTA */}
         <div className="hidden md:flex items-center gap-4">
-          
           {/* Donate Button */}
           <Link
             href="/donate"
             className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-6 py-2.5 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105"
           >
             Donate Now
-          </Link>
-
-          {/* Google Play Button */}
-          <Link
-            href="https://upbc408cdvxl36a8.public.blob.vercel-storage.com/app-debug.apk"
-            target="_blank"
-            className="group flex items-center gap-2 border border-green-200 bg-white/90 hover:bg-green-50 text-gray-800 px-5 py-2.5 rounded-full shadow-md transition-all duration-300 hover:scale-105 backdrop-blur-xl"
-          >
-            {/* Google Play Icon */}
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 via-emerald-500 to-lime-400 flex items-center justify-center shadow-md">
-              <Play
-                size={16}
-                className="text-white fill-white ml-0.5"
-              />
-            </div>
-
-            <div className="flex flex-col leading-tight">
-              <span className="text-[10px] text-gray-500">
-                Get it on
-              </span>
-
-              <span className="text-sm font-semibold group-hover:text-green-700 transition">
-                Google Play
-              </span>
-            </div>
           </Link>
         </div>
 
@@ -177,31 +151,6 @@ export default function Navbar() {
               className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-center py-3 rounded-full shadow-lg"
             >
               Donate Now
-            </Link>
-
-            {/* Google Play CTA */}
-            <Link
-              href="https://upbc408cdvxl36a8.public.blob.vercel-storage.com/app-debug.apk"
-              target="_blank"
-              onClick={() => setOpen(false)}
-              className="flex items-center justify-center gap-3 border border-green-200 bg-green-50 hover:bg-green-100 text-gray-800 py-3 rounded-full shadow-md transition-all duration-300"
-            >
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-green-500 via-emerald-500 to-lime-400 flex items-center justify-center shadow">
-                <Play
-                  size={18}
-                  className="text-white fill-white ml-0.5"
-                />
-              </div>
-
-              <div className="flex flex-col leading-tight text-left">
-                <span className="text-[10px] text-gray-500">
-                  Download from
-                </span>
-
-                <span className="text-sm font-semibold text-green-700">
-                  Google Play
-                </span>
-              </div>
             </Link>
           </div>
         </div>

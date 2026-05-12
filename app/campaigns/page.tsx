@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
 
 type Campaign = {
   id: string;
@@ -16,7 +19,7 @@ const campaigns: Campaign[] = [
     description: "Provide nutritious meals to underprivileged children.",
     raised: 35000,
     goal: 50000,
-    image: "/images/child-meal.jpg",
+    image: "/images/child-meal.png",
   },
   {
     id: "village-drive",
@@ -58,8 +61,6 @@ const campaigns: Campaign[] = [
     goal: 40000,
     image: "/images/festival.jpg",
   },
-
-  // ⭐ NEW 7TH CAMPAIGN
   {
     id: "women-support",
     title: "Women & Child Nutrition",
@@ -74,7 +75,7 @@ export default function Campaigns() {
   return (
     <main className="relative overflow-hidden text-gray-900">
 
-      {/* 🌈 BACKGROUND */}
+      {/* BACKGROUND */}
       <div className="fixed inset-0 -z-10 bg-gradient-to-br from-green-50 via-white to-emerald-100" />
       <div className="fixed inset-0 -z-10 opacity-20 bg-[radial-gradient(circle_at_20%_30%,#22c55e,transparent_40%)]" />
 
@@ -98,10 +99,19 @@ export default function Campaigns() {
             ["📍", "75+", "Cities"],
             ["🚀", "100%", "Transparency"],
           ].map(([icon, num, label], i) => (
-            <div key={i} className="bg-white/70 p-6 rounded-xl shadow">
+            <div
+              key={i}
+              className="bg-white/70 p-6 rounded-xl shadow"
+            >
               <div className="text-2xl">{icon}</div>
-              <h3 className="text-xl font-bold text-green-700">{num}</h3>
-              <p className="text-gray-600 text-sm">{label}</p>
+
+              <h3 className="text-xl font-bold text-green-700">
+                {num}
+              </h3>
+
+              <p className="text-gray-600 text-sm">
+                {label}
+              </p>
             </div>
           ))}
         </div>
@@ -109,7 +119,9 @@ export default function Campaigns() {
 
       {/* CAMPAIGNS */}
       <section className="max-w-7xl mx-auto px-6 py-10">
-        <h2 className="text-4xl font-bold text-center">Active Campaigns</h2>
+        <h2 className="text-4xl font-bold text-center">
+          Active Campaigns
+        </h2>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-10">
           {campaigns.map((c) => {
@@ -120,14 +132,15 @@ export default function Campaigns() {
             return (
               <div
                 key={c.id}
-                className="group bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition"
+                className="group bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition duration-300"
               >
                 {/* IMAGE */}
-                <div className="h-48 overflow-hidden">
-                  <img
+                <div className="relative h-56 w-full overflow-hidden">
+                  <Image
                     src={c.image}
                     alt={c.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition"
+                    fill
+                    className="object-cover group-hover:scale-110 transition duration-500"
                   />
                 </div>
 
@@ -143,7 +156,7 @@ export default function Campaigns() {
 
                   {/* PROGRESS */}
                   <div className="mt-5">
-                    <div className="w-full bg-gray-200 rounded-full h-3">
+                    <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                       <div
                         className="bg-gradient-to-r from-green-500 to-emerald-600 h-3"
                         style={{ width: `${progress}%` }}
@@ -155,7 +168,6 @@ export default function Campaigns() {
                       <span>Goal ₹{c.goal.toLocaleString()}</span>
                     </div>
 
-                    {/* 🔥 IMPORTANT ADDITION */}
                     <div className="mt-2 text-xs text-red-500 font-semibold">
                       ₹{remaining.toLocaleString()} still required
                     </div>
@@ -181,7 +193,10 @@ export default function Campaigns() {
 
       {/* FINAL CTA */}
       <section className="py-24 text-center">
-        <h2 className="text-4xl font-bold">Your Small Help = Someone’s Meal</h2>
+        <h2 className="text-4xl font-bold">
+          Your Small Help = Someone’s Meal
+        </h2>
+
         <p className="mt-4 text-gray-600">
           Don't wait. Hunger doesn't.
         </p>

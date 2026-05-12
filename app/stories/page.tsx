@@ -199,6 +199,6 @@ const stories = [
   {
     title: "Village United",
     text: "Meals created unity and hope across a struggling community.",
-    image: "/images/village.jpg",
+    image: "/images/village12.jpg",
   },
 ];
