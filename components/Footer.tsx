@@ -504,15 +504,24 @@ export default function Footer() {
 
               <div className="flex items-center gap-6">
 
-                <Link href="#" className="hover:text-green-400 transition">
+                <Link
+                  href="/privacy-policy"
+                  className="hover:text-green-400 transition"
+                >
                   Privacy Policy
                 </Link>
 
-                <Link href="#" className="hover:text-green-400 transition">
+                <Link
+                  href="/terms-and-conditions"
+                  className="hover:text-green-400 transition"
+                >
                   Terms & Conditions
                 </Link>
 
-                <Link href="#" className="hover:text-green-400 transition">
+                <Link
+                  href="/support"
+                  className="hover:text-green-400 transition"
+                >
                   Support
                 </Link>
 
