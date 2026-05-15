@@ -374,20 +374,20 @@ export default function Footer() {
                 <ul className="space-y-5">
 
                   {[
-                    "Home",
-                    "About",
-                    "Campaigns",
-                    "Donate",
-                    "Volunteers",
-                    "Contact",
+                    { name: "Home", path: "/" },
+                    { name: "About", path: "/about" },
+                    { name: "Campaigns", path: "/campaigns" },
+                    { name: "Donate", path: "/donate" },
+                    { name: "Volunteers", path: "/become-volunteer" },
+                    { name: "Contact", path: "/contact" },
                   ].map((item, i) => (
                     <li key={i}>
                       <Link
-                        href="#"
+                        href={item.path}
                         className="text-gray-400 hover:text-green-400 transition flex items-center gap-3 group"
                       >
                         <span className="w-0 group-hover:w-4 h-[2px] bg-green-500 transition-all duration-300" />
-                        {item}
+                        {item.name}
                       </Link>
                     </li>
                   ))}
