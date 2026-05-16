@@ -73,7 +73,7 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white shadow-md border border-green-100 overflow-hidden">
               <Image
-                src="/favicon.ico"
+                src="/logo/onemeal-onehope.png"
                 alt="Logo"
                 width={34}
                 height={34}
@@ -174,7 +174,7 @@ export default function Navbar() {
               {/* Logo */}
               <div className="flex items-center justify-center w-[70px] h-[70px] rounded-2xl bg-white border border-green-100 shadow-md overflow-hidden flex-shrink-0">
                 <Image
-                  src="/favicon.ico"
+                  src="/logo/onemeal-onehope.png"
                   alt="Logo"
                   width={42}
                   height={42}
